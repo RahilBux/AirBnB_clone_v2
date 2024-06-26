@@ -36,6 +36,7 @@ class DBStorage:
             "City": City,
             "State": State,
             "User": User,
+            "Place": Place,
         }
         result = {}
         query_row = []
