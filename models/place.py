@@ -4,6 +4,17 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from os import getenv
 from sqlalchemy.orm import relationship
+from models.amenity import Amenity
+
+place_amenity = Table('place_amenity', Base.metadata,
+                      Column('place_id', String(60),
+                             ForeignKey('places.id'),
+                             primary_key=True, nullable=False),
+                      Column('amenity_id', String(60),
+                             ForeignKey('amenities.id'),
+                             primary_key=True, nullable=False),
+                      )
+
 
 class Place(BaseModel, Base):
     """ A place to stay """
@@ -25,6 +36,9 @@ class Place(BaseModel, Base):
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         reviews = relationship(
                 'Review', cascade='all, delete', backref='place')
+        amenities = relationship(
+                'Amenity', secondary=place_amenity, viewonly=False,
+                backref='place_amenities')
     else:
         @property
         def reviews(self):
@@ -38,3 +52,14 @@ class Place(BaseModel, Base):
                 if review.place_id == self.id:
                     rev_list.append(review)
             return rev_list
+
+        @propery
+        def amenities(self):
+            """ Returns the list of instances """
+            return self.amenity_ids
+
+        @amenities.setter
+        def amenities(self, obj=None):
+            """Setter"""
+            if type(obj) is Amenity and obj.id not in self.amenity_ids:
+                self.amenity_ids.append(obj.id)

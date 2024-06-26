@@ -38,6 +38,7 @@ class DBStorage:
             "User": User,
             "Place": Place,
             "Review": Review,
+            "Amenity": Amenity,
         }
         result = {}
         query_row = []
