@@ -35,6 +35,7 @@ class DBStorage:
         classes = {
             "City": City,
             "State": State,
+            "User": User,
         }
         result = {}
         query_row = []
