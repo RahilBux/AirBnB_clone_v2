@@ -37,6 +37,7 @@ class DBStorage:
             "State": State,
             "User": User,
             "Place": Place,
+            "Review": Review,
         }
         result = {}
         query_row = []
