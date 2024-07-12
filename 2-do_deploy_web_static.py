@@ -1,20 +1,19 @@
 #!/usr/bin/python3
 """
-Fabric script Generates a .tgz archive
+Distributes an archive to my web
 """
 from fabric.api import *
 from datetime import datetime
 import os
 
-env.hosts = ['54.209.215.166', '54.175.145.85']
+env.hosts = ['54.144.136.64', '100.24.236.179']
 env.user = 'ubuntu'
 
 
 def do_pack():
-    """
-    Generates a tgz archive from the
-    contents of the web_static folder
-    """
+    '''
+    Generates a tgz archive
+    '''
     try:
         local('mkdir -p versions')
         datetime_format = '%Y%m%d%H%M%S'
@@ -26,10 +25,11 @@ def do_pack():
     except:
         return None
 
+
 def do_deploy(archive_path):
-    """
-    Deploys archive to web
-    """
+    '''
+    Deploy archive
+    '''
     if not os.path.exists(archive_path):
         return False
     file_name = archive_path.split('/')[1]
@@ -44,7 +44,7 @@ def do_deploy(archive_path):
         run('rm -rf {}/web_static'.format(releases_path))
         run('rm -rf /data/web_static/current')
         run('ln -s {} /data/web_static/current'.format(releases_path))
-        print("New version deployed!")
+        print('New version deployed!')
         return True
     except:
         return False
