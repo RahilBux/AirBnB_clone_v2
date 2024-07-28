@@ -35,9 +35,9 @@ def python_comp(text="is_cool"):
 
 
 @app.route('/number/<int:n>')
-def display_int(num):
-    """Displays num is a number only if num is an integer"""
-    return "%d is a number" % num
+def display_int(n):
+    """display n only if n is a number"""
+    return "%d is a number" % n
 
 
 if __name__ == "__main__":
